@@ -3,16 +3,22 @@ from rest_framework import serializers
 from products.models import Product, Category, Image, Specification
 
 
-class BaseCategorySerializer(serializers.HyperlinkedModelSerializer):
+class BaseCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('name',)
 
 
-class BaseSpecificationSerializer(serializers.HyperlinkedModelSerializer):
+class BaseSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Specification
         fields = ('price',)
+
+
+class DetailProductSpecificationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specification
+        fields = ('id', 'specification', 'quantity', 'price')
 
 
 class MainProductSerializer(serializers.ModelSerializer):
@@ -28,6 +34,8 @@ class MainProductSerializer(serializers.ModelSerializer):
 
 
 class DetailProductSerializer(serializers.ModelSerializer):
+    specifications = DetailProductSpecificationsSerializer(many=True)
+
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ('id', 'name', 'description', 'about_product', 'in_discount', 'discount_percentage', 'specifications')

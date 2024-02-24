@@ -23,7 +23,7 @@ class ProductDetailView(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-class ChildCategoryProductView(APIView):
+class ChildCategoryView(APIView):
     def get(self, request, slug, format=None):
         child_categories = Category.objects.child_categories(slug)
         parent_category = Category.objects.get(slug=slug)
