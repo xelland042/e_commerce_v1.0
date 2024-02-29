@@ -38,4 +38,4 @@ class DetailProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'description', 'about_product', 'in_discount', 'discount_percentage', 'specifications')
+        fields = '__all__'
