@@ -1,7 +1,9 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.contrib.auth import get_user_model
 from products.manager import CategoryManager, ProductManager
+
+User = get_user_model()
 
 
 class BaseModel(models.Model):
@@ -55,3 +57,13 @@ class Specification(BaseModel):
 
     def __str__(self):
         return f'{self.product.name} - {self.price} - {self.quantity}'
+
+
+class Order(BaseModel):
+    products_specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True, related_name='specifications')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='users', blank=True)
+    address = models.CharField(max_length=255)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.user} - {self.products_specification.product.name}'

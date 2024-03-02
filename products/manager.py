@@ -14,3 +14,7 @@ class ProductManager(models.Manager):
     def cheap_product_only(self):
         cheap = super().get_queryset().all()
         return None
+
+
+class SpecificationManager(models.Manager):
+    pass
